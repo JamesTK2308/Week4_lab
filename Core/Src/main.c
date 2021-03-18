@@ -322,20 +322,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	{
 
 		PutSW = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
-
-		if(PutSW==0)
+		switch(PutSW)
 		{
+		case 0:
 			Time=HAL_GetTick();
 			RandomTime= 1000 +((22695477* ADCData[0]) +ADCData[1])% 10000;
 			TimeOn=Time+RandomTime;
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5,RESET);
-
-		}
-		else if (PutSW==1)
-		{
+		break;
+		case 1:
 			RealTime=HAL_GetTick()-TimeOn;
-		}
+		break;
 
+	}
 	}
 
 }

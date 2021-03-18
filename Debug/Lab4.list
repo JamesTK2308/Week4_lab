@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000773a  00000000  00000000  0002003c  2**0
+ 12 .debug_info   0000774b  00000000  00000000  0002003c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 0000154a  00000000  00000000  00027776  2**0
+ 13 .debug_abbrev 0000154a  00000000  00000000  00027787  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 00000788  00000000  00000000  00028cc0  2**3
+ 14 .debug_aranges 00000788  00000000  00000000  00028cd8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 000006d0  00000000  00000000  00029448  2**3
+ 15 .debug_ranges 000006d0  00000000  00000000  00029460  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  000151ae  00000000  00000000  00029b18  2**0
+ 16 .debug_macro  000151ae  00000000  00000000  00029b30  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00006647  00000000  00000000  0003ecc6  2**0
+ 17 .debug_line   00006648  00000000  00000000  0003ecde  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    00085d16  00000000  00000000  0004530d  2**0
+ 18 .debug_str    00085d16  00000000  00000000  00045326  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000cb023  2**0
+ 19 .comment      0000007b  00000000  00000000  000cb03c  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00001df0  00000000  00000000  000cb0a0  2**2
+ 20 .debug_frame  00001df0  00000000  00000000  000cb0b8  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -981,68 +981,67 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
  8000876:	b29a      	uxth	r2, r3
  8000878:	4b1f      	ldr	r3, [pc, #124]	; (80008f8 <HAL_GPIO_EXTI_Callback+0xa0>)
  800087a:	801a      	strh	r2, [r3, #0]
-
-		if(PutSW==0)
+		switch(PutSW){
  800087c:	4b1e      	ldr	r3, [pc, #120]	; (80008f8 <HAL_GPIO_EXTI_Callback+0xa0>)
  800087e:	881b      	ldrh	r3, [r3, #0]
  8000880:	2b00      	cmp	r3, #0
- 8000882:	d126      	bne.n	80008d2 <HAL_GPIO_EXTI_Callback+0x7a>
-		{
-			Time=HAL_GetTick();
- 8000884:	f000 fa18 	bl	8000cb8 <HAL_GetTick>
- 8000888:	4602      	mov	r2, r0
- 800088a:	4b1c      	ldr	r3, [pc, #112]	; (80008fc <HAL_GPIO_EXTI_Callback+0xa4>)
- 800088c:	601a      	str	r2, [r3, #0]
-			RandomTime= 1000 +((22695477* ADCData[0]) +ADCData[1])% 10000;
- 800088e:	4b1c      	ldr	r3, [pc, #112]	; (8000900 <HAL_GPIO_EXTI_Callback+0xa8>)
- 8000890:	681b      	ldr	r3, [r3, #0]
- 8000892:	4a1c      	ldr	r2, [pc, #112]	; (8000904 <HAL_GPIO_EXTI_Callback+0xac>)
- 8000894:	fb02 f203 	mul.w	r2, r2, r3
- 8000898:	4b19      	ldr	r3, [pc, #100]	; (8000900 <HAL_GPIO_EXTI_Callback+0xa8>)
- 800089a:	685b      	ldr	r3, [r3, #4]
- 800089c:	441a      	add	r2, r3
- 800089e:	4b1a      	ldr	r3, [pc, #104]	; (8000908 <HAL_GPIO_EXTI_Callback+0xb0>)
- 80008a0:	fba3 1302 	umull	r1, r3, r3, r2
- 80008a4:	0b5b      	lsrs	r3, r3, #13
- 80008a6:	f242 7110 	movw	r1, #10000	; 0x2710
- 80008aa:	fb01 f303 	mul.w	r3, r1, r3
- 80008ae:	1ad3      	subs	r3, r2, r3
- 80008b0:	f503 737a 	add.w	r3, r3, #1000	; 0x3e8
- 80008b4:	4a15      	ldr	r2, [pc, #84]	; (800090c <HAL_GPIO_EXTI_Callback+0xb4>)
- 80008b6:	6013      	str	r3, [r2, #0]
-			TimeOn=Time+RandomTime;
- 80008b8:	4b10      	ldr	r3, [pc, #64]	; (80008fc <HAL_GPIO_EXTI_Callback+0xa4>)
- 80008ba:	681a      	ldr	r2, [r3, #0]
- 80008bc:	4b13      	ldr	r3, [pc, #76]	; (800090c <HAL_GPIO_EXTI_Callback+0xb4>)
- 80008be:	681b      	ldr	r3, [r3, #0]
- 80008c0:	4413      	add	r3, r2
- 80008c2:	4a13      	ldr	r2, [pc, #76]	; (8000910 <HAL_GPIO_EXTI_Callback+0xb8>)
- 80008c4:	6013      	str	r3, [r2, #0]
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5,RESET);
- 80008c6:	2200      	movs	r2, #0
- 80008c8:	2120      	movs	r1, #32
- 80008ca:	4812      	ldr	r0, [pc, #72]	; (8000914 <HAL_GPIO_EXTI_Callback+0xbc>)
- 80008cc:	f001 fc00 	bl	80020d0 <HAL_GPIO_WritePin>
-			RealTime=HAL_GetTick()-TimeOn;
-		}
+ 8000882:	d002      	beq.n	800088a <HAL_GPIO_EXTI_Callback+0x32>
+ 8000884:	2b01      	cmp	r3, #1
+ 8000886:	d027      	beq.n	80008d8 <HAL_GPIO_EXTI_Callback+0x80>
+		break;
 
+	}
 	}
 
 }
- 80008d0:	e00b      	b.n	80008ea <HAL_GPIO_EXTI_Callback+0x92>
-		else if (PutSW==1)
- 80008d2:	4b09      	ldr	r3, [pc, #36]	; (80008f8 <HAL_GPIO_EXTI_Callback+0xa0>)
- 80008d4:	881b      	ldrh	r3, [r3, #0]
- 80008d6:	2b01      	cmp	r3, #1
- 80008d8:	d107      	bne.n	80008ea <HAL_GPIO_EXTI_Callback+0x92>
+ 8000888:	e02f      	b.n	80008ea <HAL_GPIO_EXTI_Callback+0x92>
+			Time=HAL_GetTick();
+ 800088a:	f000 fa15 	bl	8000cb8 <HAL_GetTick>
+ 800088e:	4602      	mov	r2, r0
+ 8000890:	4b1a      	ldr	r3, [pc, #104]	; (80008fc <HAL_GPIO_EXTI_Callback+0xa4>)
+ 8000892:	601a      	str	r2, [r3, #0]
+			RandomTime= 1000 +((22695477* ADCData[0]) +ADCData[1])% 10000;
+ 8000894:	4b1a      	ldr	r3, [pc, #104]	; (8000900 <HAL_GPIO_EXTI_Callback+0xa8>)
+ 8000896:	681b      	ldr	r3, [r3, #0]
+ 8000898:	4a1a      	ldr	r2, [pc, #104]	; (8000904 <HAL_GPIO_EXTI_Callback+0xac>)
+ 800089a:	fb02 f203 	mul.w	r2, r2, r3
+ 800089e:	4b18      	ldr	r3, [pc, #96]	; (8000900 <HAL_GPIO_EXTI_Callback+0xa8>)
+ 80008a0:	685b      	ldr	r3, [r3, #4]
+ 80008a2:	441a      	add	r2, r3
+ 80008a4:	4b18      	ldr	r3, [pc, #96]	; (8000908 <HAL_GPIO_EXTI_Callback+0xb0>)
+ 80008a6:	fba3 1302 	umull	r1, r3, r3, r2
+ 80008aa:	0b5b      	lsrs	r3, r3, #13
+ 80008ac:	f242 7110 	movw	r1, #10000	; 0x2710
+ 80008b0:	fb01 f303 	mul.w	r3, r1, r3
+ 80008b4:	1ad3      	subs	r3, r2, r3
+ 80008b6:	f503 737a 	add.w	r3, r3, #1000	; 0x3e8
+ 80008ba:	4a14      	ldr	r2, [pc, #80]	; (800090c <HAL_GPIO_EXTI_Callback+0xb4>)
+ 80008bc:	6013      	str	r3, [r2, #0]
+			TimeOn=Time+RandomTime;
+ 80008be:	4b0f      	ldr	r3, [pc, #60]	; (80008fc <HAL_GPIO_EXTI_Callback+0xa4>)
+ 80008c0:	681a      	ldr	r2, [r3, #0]
+ 80008c2:	4b12      	ldr	r3, [pc, #72]	; (800090c <HAL_GPIO_EXTI_Callback+0xb4>)
+ 80008c4:	681b      	ldr	r3, [r3, #0]
+ 80008c6:	4413      	add	r3, r2
+ 80008c8:	4a11      	ldr	r2, [pc, #68]	; (8000910 <HAL_GPIO_EXTI_Callback+0xb8>)
+ 80008ca:	6013      	str	r3, [r2, #0]
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5,RESET);
+ 80008cc:	2200      	movs	r2, #0
+ 80008ce:	2120      	movs	r1, #32
+ 80008d0:	4810      	ldr	r0, [pc, #64]	; (8000914 <HAL_GPIO_EXTI_Callback+0xbc>)
+ 80008d2:	f001 fbfd 	bl	80020d0 <HAL_GPIO_WritePin>
+		break;
+ 80008d6:	e008      	b.n	80008ea <HAL_GPIO_EXTI_Callback+0x92>
 			RealTime=HAL_GetTick()-TimeOn;
- 80008da:	f000 f9ed 	bl	8000cb8 <HAL_GetTick>
- 80008de:	4602      	mov	r2, r0
- 80008e0:	4b0b      	ldr	r3, [pc, #44]	; (8000910 <HAL_GPIO_EXTI_Callback+0xb8>)
- 80008e2:	681b      	ldr	r3, [r3, #0]
- 80008e4:	1ad3      	subs	r3, r2, r3
- 80008e6:	4a0c      	ldr	r2, [pc, #48]	; (8000918 <HAL_GPIO_EXTI_Callback+0xc0>)
- 80008e8:	6013      	str	r3, [r2, #0]
+ 80008d8:	f000 f9ee 	bl	8000cb8 <HAL_GetTick>
+ 80008dc:	4602      	mov	r2, r0
+ 80008de:	4b0c      	ldr	r3, [pc, #48]	; (8000910 <HAL_GPIO_EXTI_Callback+0xb8>)
+ 80008e0:	681b      	ldr	r3, [r3, #0]
+ 80008e2:	1ad3      	subs	r3, r2, r3
+ 80008e4:	4a0c      	ldr	r2, [pc, #48]	; (8000918 <HAL_GPIO_EXTI_Callback+0xc0>)
+ 80008e6:	6013      	str	r3, [r2, #0]
+		break;
+ 80008e8:	bf00      	nop
 }
  80008ea:	bf00      	nop
  80008ec:	3708      	adds	r7, #8
