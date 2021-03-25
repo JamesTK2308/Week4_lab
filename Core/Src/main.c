@@ -320,11 +320,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 	if(GPIO_Pin == GPIO_PIN_13)
 	{
-
 		PutSW = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
 		switch(PutSW)
 		{
 		case 0:
+
 			Time=HAL_GetTick();
 			RandomTime= 1000 +((22695477* ADCData[0]) +ADCData[1])% 10000;
 			TimeOn=Time+RandomTime;
